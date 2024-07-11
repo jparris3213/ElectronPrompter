@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -32,18 +32,27 @@
             margin-bottom: 10px;
             /* Space between items */
         }
+
+        #timer {
+            color: white;
+            font-size: 80px;
+        }
     </style>
 </head>
 
 <body>
     <div>
         <ul>
-            <div>
-                <div id="timer" style="color: white; font-size: 80px;">00:00:00</div>
-                <button id="start">Start</button>
-                <button id="stop">Stop</button>
-                <button id="reset">Reset</button>
-            </div></ul>
+            <li>
+                <div>
+                    <div id="timer">00:00:00</div>
+                    <button id="start">Start</button>
+                    <button id="stop">Stop</button>
+                    <button id="reset">Reset</button>
+                </div>
+
+            </li>
+            </ul>
         <ul id="placeholderList"></ul>
     </div>
 
