@@ -1,0 +1,16 @@
+{
+  "name": "txtprompter",
+  "version": "1.0.0",
+  "description": "Takes a text file and shows it on a screen for live streaming notes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^31.2.0",
+    "nodemon": "^3.1.4"
+  }
+}

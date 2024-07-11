@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product Window</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000000;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            width: 90%;
+            /* Adjust width as needed */
+        }
+
+        li {
+            color: white;
+            font-size: 22px;
+            text-align: left;
+            /* Align text to the left */
+            display: flex;
+            justify-content: space-between;
+            /* Space between name and price */
+            margin-bottom: 10px;
+            /* Space between items */
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div id="timer" style="color: white; font-size: 30px;">00:00:00</div>
+        <button id="start">Start</button>
+        <button id="stop">Stop</button>
+        <button id="reset">Reset</button>
+    </div>
+    <div>
+        <ul id="placeholderList"></ul>
+    </div>
+
+    <script>
+
+        // Timer
+        let timerInterval;
+        let seconds = 0;
+
+        function startTimer() {
+            if (!timerInterval) { // Prevent multiple intervals if start is clicked more than once
+                timerInterval = setInterval(() => {
+                    seconds++;
+                    document.getElementById('timer').innerText = formatTime(seconds);
+                }, 1000);
+            }
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+
+        function resetTimer() {
+            stopTimer(); // Stop the timer if it's running
+            seconds = 0;
+            document.getElementById('timer').innerText = "00:00:00";
+        }
+
+        function formatTime(sec) {
+            const hours = Math.floor(sec / 3600);
+            const minutes = Math.floor((sec - (hours * 3600)) / 60);
+            const seconds = sec - (hours * 3600) - (minutes * 60);
+
+            return [hours, minutes, seconds]
+                .map(v => v < 10 ? "0" + v : v)
+                .join(":");
+        }
+
+        document.getElementById('start').addEventListener('click', startTimer);
+        document.getElementById('stop').addEventListener('click', stopTimer);
+        document.getElementById('reset').addEventListener('click', resetTimer);
+
+
+
+
+
+        const listElement = document.getElementById('placeholderList');
+
+        // Fetch the JSON data
+        fetch('prompt.json')
+            .then(response => response.json())
+            .then(data => {
+                data.prompt.forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `<span>${item.Name}</span><span>${item.Price}</span>`; // Use innerHTML to include both name and price
+                    listElement.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Error loading the JSON data:', error));
+    </script>
+</body>
+
+</html>
