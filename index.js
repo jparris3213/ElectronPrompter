@@ -3,7 +3,7 @@ const { app, BrowserWindow } = require('electron');
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
-        width: Math.round(1920 * 0.2),
+        width: Math.round(500),
         height: 1000,
         backgroundColor: '#000000',
         webPreferences: {
