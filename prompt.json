@@ -2,44 +2,44 @@
 {
     "prompt": [
         {
-            "Name": "3/4 Sleeve Lace Trim Cardigan",
-            "Price": "$40.00"
+            "Name": "Judy Blue Pull on Capri",
+            "Price": "$65.00"
         },
         {
-            "Name": "High-Waisted Flowy Skorts",
-            "Price": "$30.00"
+            "Name": "Seamless Triple Criss-Cross Front Cami",
+            "Price": "$18.00"
         },
         {
-            "Name": "CROCHET CROP TANK TOP: White Multi",
-            "Price": "$48.00 "
+            "Name": "Western Bohemian Lightweight Croche Kimono",
+            "Price": "$60.00 "
         },
         {
-            "Name": "STRETCHY FAUX LEATHER MINI SKIRT WITH BACK ZIPPER",
-            "Price": "$35.00 "
+            "Name": "Ruffle V-Neck Fit Swimsuit (Black and Red)",
+            "Price": "$50.00 "
         },
         {
-            "Name": "COTTON V NECK LONG SLEEVE CROCHET TOP: BLUSH",
-            "Price": "$40.00"
+            "Name": "Solid Ruffle V Neck Fit Swimsuit (Navy Flower)",
+            "Price": "$50.00"
         },
         {
-            "Name": "FLORAL PRINT BABYDOLL DRESS: LIMe",
+            "Name": "Fawnfit 3 in 1 Athleisure Mini Tank Dress",
             "Price": "$45.00"
         },
         {
-            "Name": "LEOPARD PRINT CHIFFON LINED DRESS: RED",
-            "Price": "$45.00"
-        },
-        {
-            "Name": "TIE-DYE STRAPPY MAXI DRESS: PINK ",
-            "Price": "$35.00 "
-        },
-        {
-            "Name": "PEACHSKIN FABRIC OVERALL JUMPSUIT",
-            "Price": "$40.00"
-        },
-        {
-            "Name": "High-Waisted Flowy Skorts",
+            "Name": "High Waist Romper",
             "Price": "$30.00"
+        },
+        {
+            "Name": "Hot Pink Sequin Romper ",
+            "Price": "$40.00 "
+        },
+        {
+            "Name": "Crinkled Mini Dress w Smocked Bust",
+            "Price": "$35.00"
+        },
+        {
+            "Name": "Eylet Scalloped Tie Dress",
+            "Price": "$40.00"
         }
     ]
 }
