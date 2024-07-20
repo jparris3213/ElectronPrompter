@@ -62,7 +62,22 @@ app.on('activate', () => {
 
 ipcMain.on('start-timer', (event, data) => {
     // Now mainWindow is correctly referenced
+    console.log("recieved Start");
     if (mainWindow) {
         mainWindow.webContents.send('start-timer', data);
+    }
+});
+
+ipcMain.on('stop-timer', (event, data) => {
+    console.log("recieved Stop");
+    // Now mainWindow is correctly referenced
+    if (mainWindow) {
+        mainWindow.webContents.send('stop-timer', data);
+    }
+});
+ipcMain.on('reset-timer', (event, data) => {
+    // Now mainWindow is correctly referenced
+    if (mainWindow) {
+        mainWindow.webContents.send('reset-timer', data);
     }
 });

@@ -65,6 +65,16 @@
             startTimer();
         });
 
+        ipcRenderer.on('stop-timer', () => {
+            console.log("Recieve");
+            stopTimer();
+        });
+
+        ipcRenderer.on('reset-timer', () => {
+            console.log("Recieve");
+            resetTimer();
+        });
+
         // Timer
         let timerInterval;
         let seconds = 0;

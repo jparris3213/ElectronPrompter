@@ -4,15 +4,32 @@
     <title>Controller</title>
     <script>
         const { ipcRenderer } = require('electron');
+
         function startTimer() {
             // Send "start-timer" message to the main process
             ipcRenderer.send('start-timer');
+            console.log("Sent");
+        }
+
+        
+        function stopTimer() {
+            // Send "start-timer" message to the main process
+            ipcRenderer.send('stop-timer');
+            console.log("Sent");
+        }
+
+        
+        function restartTimer() {
+            // Send "start-timer" message to the main process
+            ipcRenderer.send('reset-timer');
             console.log("Sent");
         }
     </script>
 </head>
 <body>
     <button onclick="startTimer()">Start Timer</button>
+    <button onclick="stopTimer()">Stop Timer</button>
+    <button onclick="restartTimer()">Reset Timer</button>
 </body>
 
 </html>
