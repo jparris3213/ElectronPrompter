@@ -58,6 +58,13 @@
 
     <script>
 
+        const { ipcRenderer } = require('electron');
+        // Listen for the "start-timer" message
+        ipcRenderer.on('start-timer', () => {
+            console.log("Recieve");
+            startTimer();
+        });
+
         // Timer
         let timerInterval;
         let seconds = 0;

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Controller</title>
+    <script>
+        const { ipcRenderer } = require('electron');
+        function startTimer() {
+            // Send "start-timer" message to the main process
+            ipcRenderer.send('start-timer');
+            console.log("Sent");
+        }
+    </script>
+</head>
+<body>
+    <button onclick="startTimer()">Start Timer</button>
+</body>
+
+</html>
