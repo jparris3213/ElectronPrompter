@@ -6,8 +6,8 @@ let controlWindow;
 
 function createDisplayWindow() {
     mainWindow = new BrowserWindow({
-        width: Math.round(500),
-        height: 1000,
+        width: 1920,
+        height: 1060,
         backgroundColor: '#000000',
         webPreferences: {
             nodeIntegration: true,
