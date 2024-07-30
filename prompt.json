@@ -1,55 +1,28 @@
-
 {
-    "prompt": [
-        {
-            "Name": "STRETCH HIGH WAIST SKINNY DENIM JEANS ",
-            "Price": "$45.00"
-        },
-        {
-            "Name": "Lace Embrodery Neck Trim ",
-            "Price": "$25.00"
-        },
-        {
-            "Name": "Short Sleeve Peasant Heart Top ",
-            "Price": "$25.00"
-        },
-        {
-            "Name": "Tiered Sleeve dress",
-            "Price": " $25.00"
-        },
-        {
-            "Name": "SEAMLESS TRIPLE CRISS-CROSS FRONT CAMI",
-            "Price": "$18.00"
-        },
-        {
-            "Name": "Hailey Lace Button Up",
-            "Price": "$50.00"
-        },
-        {
-            "Name": "Ribbed textured shirt",
-            "Price": "$30.00"
-        },
-        {
-            "Name": "Mock neck crop",
-            "Price": "$15.00"
-        },
-        {
-            "Name": "MANDARIN COLLAR",
-            "Price": "$30.00"
-        },
-        {
-            "Name": "Woven Pleated Wide Leg Pants With Lining",
-            "Price": "$25.00"
-        },
-        {
-            "Name": "Retrolicious Fairytale Books Bow Top ",
-            "Price": "$50.00"
-        },
-        {
-            "Name": "Retrolicious Boat Neck Top in Mod Floral",
-            "Price": "$35.00"
-        }
-    ]
+  "prompt": [
+    {
+      "Name": "Item Dress 1",
+      "Price": "$40.00"
+    },
+    {
+      "Name": "Item Dress 1",
+      "Price": "$40.00"
+    },
+    {
+      "Name": "Item Dress 1",
+      "Price": "$40.00"
+    },
+    {
+      "Name": "Item Dress 1",
+      "Price": "$40.00"
+    },
+    {
+      "Name": "Item Dress 1",
+      "Price": "$40.00"
+    },
+    {
+      "Name": "Item Dress 1",
+      "Price": "$40.00"
+    }
+  ]
 }
-
-

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,6 +16,7 @@
         .container {
             display: flex;
             width: 90%;
+            height: 95%;
             /* Adjust width as needed */
         }
         .left-column {
@@ -25,6 +27,7 @@
         .right-column {
             flex: 1;
             display: flex;
+            flex-direction: column;
             justify-content: right;
             align-items: right;
         }
@@ -33,8 +36,9 @@
             padding: 0;
         }
         li {
+            outline:auto;
             color: white;
-            font-size: 30px;
+            font-size: 40px;
             text-align: left;
             /* Align text to the left */
             display: flex;
@@ -53,9 +57,35 @@
             height: auto;
             background-color: #333;
         }
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: auto;
+        }
         #webcam video {
             width: 100%;
             height: auto;
+        }
+        .vertical-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: red;
+        }
+        #chatContainer {
+            width: 100%;
+            height: 300px; /* Adjust height as needed */
+            margin-top: 10px;
+            background-color: #fff;
+        }
+        #chatFrame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        #fontSizeControl {
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -65,139 +95,144 @@
             <ul>
                 <li>
                     <div>
-                        <div id="timer">00:00:00</div>
-                        <button id="start">Start</button>
-                        <button id="stop">Stop</button>
-                        <button id="reset">Reset</button>
-                    </div>
-                </li>
-            </ul>
-            <ul id="placeholderList"></ul>
+                    <div id="timer">00:00:00</div>
+                    <button id="start" style="visibility: hidden;">Start</button>
+                    <button id="stop" style="visibility: hidden;">Stop</button>
+                    <button id="reset" style="visibility: hidden;">Reset</button>
+                </div>
+            </li>
+        </ul>
+        <ul id="placeholderList"></ul>
+    </div>
+    <div class="right-column">
+        <div id="webcam"><div class="video-container">
+            <video id="webcamVideo" autoplay></video>
+            <div class="vertical-line" style="left: 25%;"></div>
+            <div class="vertical-line" style="left: 75%;"></div>
         </div>
-        <div class="right-column">
-            <div id="webcam">
-                <video id="webcamVideo" autoplay></video>
-                <select name="source" id="videoSource"></select>
-            </div>
+            <select name="source" id="videoSource" title="Select Video Source (OBS)"></select>
         </div>
     </div>
-    <script>
-        const { ipcRenderer } = require('electron');
-
-        // Listen for the "start-timer" message
-        ipcRenderer.on('start-timer', () => {
-            console.log("Recieve");
-            startTimer();
-        });
-
-        ipcRenderer.on('stop-timer', () => {
-            console.log("Recieve");
-            stopTimer();
-        });
-
-        ipcRenderer.on('reset-timer', () => {
-            console.log("Recieve");
-            resetTimer();
-        });
-
-        // Timer
-        let timerInterval;
-        let seconds = 0;
-
-        function startTimer() {
-            if (!timerInterval) { // Prevent multiple intervals if start is clicked more than once
-                timerInterval = setInterval(() => {
-                    seconds++;
-                    document.getElementById('timer').innerText = formatTime(seconds);
-                }, 1000);
-            }
+</div>
+<script>
+    const { ipcRenderer } = require('electron');
+    // Listen for the "start-timer" message
+    ipcRenderer.on('start-timer', () => {
+        console.log("Recieve");
+        startTimer();
+    });
+    ipcRenderer.on('stop-timer', () => {
+        console.log("Recieve");
+        stopTimer();
+    });
+    ipcRenderer.on('reset-timer', () => {
+        console.log("Recieve");
+        resetTimer();
+    });
+    // Timer
+    let timerInterval;
+    let seconds = 0;
+    function startTimer() {
+        if (!timerInterval) { // Prevent multiple intervals if start is clicked more than once
+            timerInterval = setInterval(() => {
+                seconds++;
+                document.getElementById('timer').innerText = formatTime(seconds);
+            }, 1000);
         }
-
-        function stopTimer() {
-            clearInterval(timerInterval);
-            timerInterval = null;
+    }
+    function stopTimer() {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    function resetTimer() {
+        stopTimer(); // Stop the timer if it's running
+        seconds = 0;
+        document.getElementById('timer').innerText = "00:00:00";
+    }
+    function formatTime(sec) {
+        const hours = Math.floor(sec / 3600);
+        const minutes = Math.floor((sec - (hours * 3600)) / 60);
+    const seconds = sec - (hours * 3600) - (minutes * 60);
+    return [hours, minutes, seconds]
+        .map(v => v < 10 ? "0" + v : v)
+        .join(":");
+}
+document.getElementById('start').addEventListener('click', startTimer);
+document.getElementById('stop').addEventListener('click', stopTimer);
+document.getElementById('reset').addEventListener('click', resetTimer);
+const listElement = document.getElementById('placeholderList');
+// Fetch the JSON data
+fetch('prompt.json')
+        .then(response => response.json())
+        .then(data => {
+            data.prompt.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `<span>${item.Name}</span><span>${item.Price}</span>`; // Use innerHTML to include both name and price
+                listElement.appendChild(listItem);
+            });
+        })
+        .catch(error => console.error('Error loading the JSON data:', error));
+    // Access the webcam and stream the video to the video element
+    const video = document.getElementById('webcamVideo');
+    const videoSelect = document.getElementById('videoSource');
+    function getStream() {
+        if (window.stream) {
+            window.stream.getTracks().forEach(track => {
+                track.stop();
+            });
         }
-
-        function resetTimer() {
-            stopTimer(); // Stop the timer if it's running
-            seconds = 0;
-            document.getElementById('timer').innerText = "00:00:00";
-        }
-
-        function formatTime(sec) {
-            const hours = Math.floor(sec / 3600);
-            const minutes = Math.floor((sec - (hours * 3600)) / 60);
-            const seconds = sec - (hours * 3600) - (minutes * 60);
-
-            return [hours, minutes, seconds]
-                .map(v => v < 10 ? "0" + v : v)
-                .join(":");
-        }
-
-        document.getElementById('start').addEventListener('click', startTimer);
-        document.getElementById('stop').addEventListener('click', stopTimer);
-        document.getElementById('reset').addEventListener('click', resetTimer);
-
-        const listElement = document.getElementById('placeholderList');
-
-        // Fetch the JSON data
-        fetch('prompt.json')
-            .then(response => response.json())
-            .then(data => {
-                data.prompt.forEach(item => {
-                    const listItem = document.createElement('li');
-                    listItem.innerHTML = `<span>${item.Name}</span><span>${item.Price}</span>`; // Use innerHTML to include both name and price
-                    listElement.appendChild(listItem);
-                });
+        const videoSource = videoSelect.value;
+        const constraints = {
+            video: { deviceId: videoSource ? { exact: videoSource } : undefined }
+        };
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then(stream => {
+                window.stream = stream;
+                video.srcObject = stream;
             })
-            .catch(error => console.error('Error loading the JSON data:', error));
-
-        // Access the webcam and stream the video to the video element
-        const video = document.getElementById('webcamVideo');
-        const videoSelect = document.getElementById('videoSource');
-
-        function getStream() {
-            if (window.stream) {
-                window.stream.getTracks().forEach(track => {
-                    track.stop();
-                });
-            }
-            const videoSource = videoSelect.value;
-            const constraints = {
-                video: { deviceId: videoSource ? { exact: videoSource } : undefined }
-            };
-            navigator.mediaDevices.getUserMedia(constraints)
-                .then(stream => {
-                    window.stream = stream;
-                    video.srcObject = stream;
-                })
-                .catch(error => {
-                    console.error('Error accessing the webcam:', error);
-                });
-        }
-
-        function getDevices() {
-            navigator.mediaDevices.enumerateDevices()
-                .then(deviceInfos => {
-                    for (let i = 0; i !== deviceInfos.length; ++i) {
-                        const deviceInfo = deviceInfos[i];
-                        const option = document.createElement('option');
-                        option.value = deviceInfo.deviceId;
-                        if (deviceInfo.kind === 'videoinput') {
-                            option.text = deviceInfo.label || `Camera ${videoSelect.length + 1}`;
-                            videoSelect.appendChild(option);
+            .catch(error => {
+                console.error('Error accessing the webcam:', error);
+            });
+    }
+    function getDevices() {
+        navigator.mediaDevices.enumerateDevices()
+            .then(deviceInfos => {
+                let obsCameraFound = false;
+                for (let i = 0; i !== deviceInfos.length; ++i) {
+                    const deviceInfo = deviceInfos[i];
+                    const option = document.createElement('option');
+                    option.value = deviceInfo.deviceId;
+                    if (deviceInfo.kind === 'videoinput') {
+                        option.text = deviceInfo.label || `Camera ${videoSelect.length + 1}`;
+                        videoSelect.appendChild(option);
+                        if (deviceInfo.label.includes("OBS Virtual Camera")) {
+                            obsCameraFound = true;
+                            videoSelect.value = deviceInfo.deviceId;
                         }
                     }
-                })
-                .catch(error => {
-                    console.error('Error enumerating devices:', error);
-                });
+                }
+                if (!obsCameraFound && videoSelect.options.length > 0) {
+                    videoSelect.selectedIndex = 0;
+                }
+                getStream();
+            })
+            .catch(error => {
+                console.error('Error enumerating devices:', error);
+            });
+    }
+    videoSelect.onchange = getStream;
+    getDevices();
+    // Screen sharing
+    const startScreenShareButton = document.getElementById('startScreenShare');
+    const screenVideo = document.getElementById('screenVideo');
+    startScreenShareButton.addEventListener('click', async () => {
+        try {
+            const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+            screenVideo.srcObject = stream;
+        } catch (error) {
+            console.error('Error sharing the screen:', error);
         }
-
-        videoSelect.onchange = getStream;
-
-        getDevices();
-        getStream();
-    </script>
+    });
+</script>
 </body>
 </html>

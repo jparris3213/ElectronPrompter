@@ -7,7 +7,7 @@ let controlWindow;
 function createDisplayWindow() {
     mainWindow = new BrowserWindow({
         width: 1920,
-        height: 1060,
+        height: 600,
         backgroundColor: '#000000',
         webPreferences: {
             nodeIntegration: true,
@@ -24,9 +24,10 @@ function createDisplayWindow() {
 
 function createControllerWindow() {
     controlWindow = new BrowserWindow({
-        width: 500,
-        height: 500,
+        width: 750,
+        height: 300,
         backgroundColor: '#000000',
+        fontcolor: '#ffffff',
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false
@@ -75,6 +76,12 @@ ipcMain.on('stop-timer', (event, data) => {
         mainWindow.webContents.send('stop-timer', data);
     }
 });
+
+ipcMain.on('refresh-index', () => {
+    if (mainWindow) {
+        mainWindow.reload();
+    }   
+})
 ipcMain.on('reset-timer', (event, data) => {
     // Now mainWindow is correctly referenced
     if (mainWindow) {

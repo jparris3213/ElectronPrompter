@@ -1,35 +1,198 @@
 <!DOCTYPE html>
-<html>
+<meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
+<html lang="en">
 <head>
     <title>Controller</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000000;
+        }
+        .container {
+            display: flex;
+            width: 90%;
+            height: 95%;
+            /* Adjust width as needed */
+        }
+        .left-column {
+            flex: 1;
+            margin-right: 10px;
+            align-items: left;
+        }
+        .right-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: right;
+            align-items: right;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            outline:auto;
+            color: white;
+            font-size: 15px;
+            text-align: left;
+            /* Align text to the left */
+            display: flex;
+            justify-content: space-between;
+            /* Space between name and price */
+            margin-bottom: 10px;
+            /* Space between items */
+        }
+        #timer {
+            color: white;
+            font-size: 80px;
+        }
+        #webcam {
+            width: 100%;
+            max-width: 1000px;
+            height: auto;
+            background-color: #333;
+        }
+        #webcam video {
+            width: 100%;
+            height: auto;
+        }
+        #chatContainer {
+            width: 100%;
+            height: 300px; /* Adjust height as needed */
+            margin-top: 10px;
+            background-color: #fff;
+        }
+        #chatFrame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        #fontSizeControl {
+            margin-top: 10px;
+        }
+
+        
+    </style>
     <script>
         const { ipcRenderer } = require('electron');
+        const fs = require('fs');
+        const path = require('path');
+        const promptFilePath = path.join(__dirname, 'prompt.json');
+        
+        reloadAndDisplayPromptFile();
 
         function startTimer() {
-            // Send "start-timer" message to the main process
             ipcRenderer.send('start-timer');
             console.log("Sent");
         }
-
         
         function stopTimer() {
-            // Send "start-timer" message to the main process
             ipcRenderer.send('stop-timer');
             console.log("Sent");
         }
-
         
         function restartTimer() {
-            // Send "start-timer" message to the main process
             ipcRenderer.send('reset-timer');
             console.log("Sent");
         }
+
+        function updatePromptFile(name, price) {
+            fs.readFile(promptFilePath, 'utf8', (err, data) => {
+                if (err) {
+                    console.error('Error reading the prompt.json file:', err);
+                    return;
+                }
+                let promptData = JSON.parse(data);
+                promptData.prompt.push({ Name: name, Price: price });
+                fs.writeFile(promptFilePath, JSON.stringify(promptData, null, 2), (err) => {
+                    if (err) {
+                        console.error('Error writing to the prompt.json file:', err);
+                    } else {
+                        console.log('prompt.json updated successfully');
+                        reloadAndDisplayPromptFile();
+                        refreshIndex();
+
+                    }
+                });
+            });
+        }
+
+        function reloadAndDisplayPromptFile() {
+            fs.readFile(promptFilePath, 'utf8', (err, data) => {
+                if (err) {
+                    console.error('Error reading the prompt.json file:', err);
+                    return;
+                }
+                let promptData = JSON.parse(data);
+                const placeholderList = document.getElementById('placeholderList');
+                placeholderList.innerHTML = ''; // Clear the list before updating it
+                promptData.prompt.forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `Name: ${item.Name}, Price: ${item.Price}`;
+                    placeholderList.appendChild(listItem);
+                });
+            });
+        }
+
+        function clearPromptFile() {
+            const emptyData = { prompt: [] };
+            fs.writeFile(promptFilePath, JSON.stringify(emptyData, null, 2), (err) => {
+                if (err) {
+                    console.error('Error clearing the prompt.json file:', err);
+                } else {
+                    console.log('prompt.json cleared successfully');
+                }
+            });
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const price = document.getElementById('price').value;
+            updatePromptFile(name, price);
+        }
+
+        function handleClearList() {
+            clearPromptFile();
+        }
+
+        function refreshIndex() {
+            ipcRenderer.send('refresh-index');
+        }
+
+// Fetch the JSON data
     </script>
 </head>
 <body>
+    
+<div class="container">
+<div class="left-column">
+    
     <button onclick="startTimer()">Start Timer</button>
     <button onclick="stopTimer()">Stop Timer</button>
     <button onclick="restartTimer()">Reset Timer</button>
-</body>
 
+    <form onsubmit="handleFormSubmit(event)">
+        <label for="name" style="color:white">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="price" style="color: white;">Price:</label>
+        <input type="text" id="price" name="price" required>
+        <button type="submit">Update</button>
+    </form>
+    <button onclick="handleClearList()">Clear List</button>
+    <button onclick="refreshIndex()">Refresh Index</button>
+</div>
+
+<div class="right-column">
+    
+    <ul id="placeholderList"></ul>
+
+</div>
+</div>
+    
+</body>
 </html>
