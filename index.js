@@ -9,6 +9,7 @@ function createDisplayWindow() {
         width: 1920,
         height: 600,
         backgroundColor: '#000000',
+        autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false
@@ -16,6 +17,8 @@ function createDisplayWindow() {
     });
 
     mainWindow.loadFile('index.html');
+    //mainWindow.removeMenu();
+    
 
     mainWindow.on('closed', () => {
         mainWindow = null;
