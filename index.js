@@ -7,7 +7,7 @@ let controlWindow;
 function createDisplayWindow() {
     mainWindow = new BrowserWindow({
         width: 1920,
-        height: 600,
+        height: 720,
         backgroundColor: '#000000',
         autoHideMenuBar: true,
         webPreferences: {
