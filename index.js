@@ -1,13 +1,22 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, WebContentsView} = require('electron');
 
 // Declare mainWindow and controlWindow at a higher scope
 let mainWindow;
 let controlWindow;
+let chat_1;
+
+function add_chat_window(website, y) {
+    chat_1 = new WebContentsView();
+    mainWindow.contentView.addChildView(chat_1);
+    chat_1.webContents.loadURL(website);
+    chat_1.setBounds({ x: 0, y: y, width: 1920/2, height: 400 })
+
+}
 
 function createDisplayWindow() {
     mainWindow = new BrowserWindow({
         width: 1920,
-        height: 720,
+        height: 1080,
         backgroundColor: '#000000',
         autoHideMenuBar: true,
         webPreferences: {
@@ -16,9 +25,13 @@ function createDisplayWindow() {
         }
     });
 
+    
+
     mainWindow.loadFile('index.html');
     //mainWindow.removeMenu();
-    
+    add_chat_window("https://www.instagram.com", 0);
+    add_chat_window("https://www.facebook.com", 401);
+    add_chat_window("https://www.tiktok.com", 802);
 
     mainWindow.on('closed', () => {
         mainWindow = null;
