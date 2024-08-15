@@ -29,9 +29,9 @@ function createDisplayWindow() {
 
     mainWindow.loadFile('index.html');
     //mainWindow.removeMenu();
-    add_chat_window("https://www.instagram.com", 0);
-    add_chat_window("https://www.facebook.com", 401);
-    add_chat_window("https://www.tiktok.com", 802);
+    //add_chat_window("https://www.instagram.com/typefortyproductions", 0);
+    //add_chat_window("https://www.facebook.com/live/producer/dashboard/2845210015632521/COMMENTS/", 0);
+    //add_chat_window("https://www.tiktok.com", 400);
 
     mainWindow.on('closed', () => {
         mainWindow = null;
