@@ -1,36 +1,64 @@
 {
   "prompt": [
     {
-      "Name": "3/4 Sleeve Mock V-Neck Tunic Dress",
+      "Name": "COTTON V NECK LONG SLEEVE CROCHET TOP: BLUSH",
+      "Price": "$40.00"
+    },
+    {
+      "Name": "SHORT SKIRT PANTS POCKETS SHORTS",
+      "Price": "$35.00"
+    },
+    {
+      "Name": "LONG SLEEVE PULLOVER CROP SWEATER",
+      "Price": "$40.00"
+    },
+    {
+      "Name": "Smocking Waist Tiered Long Skirt",
       "Price": "$30.00"
     },
     {
-      "Name": "Hacci Knit Swing Tunic Dress",
+      "Name": "Long Sleeve Square Neck Bodysuit",
       "Price": "$25.00"
     },
     {
-      "Name": "Judy Blue Pink Cargo Straight",
-      "Price": "$65.00"
+      "Name": "FRAYED DISTRESSED DENIM MINI SKIRT",
+      "Price": "$45.00"
     },
     {
-      "Name": "Flared Sleeve Wrap Cutout",
-      "Price": "$50.00"
+      "Name": "High-Waisted Flowy Skorts",
+      "Price": "$30.00"
     },
     {
-      "Name": "Ruffled Sleeve V Neck High Waist Tiered Smocked",
-      "Price": "$50.00"
+      "Name": "SEAMLESS TRIPLE CRISS-CROSS FRONT CAMI",
+      "Price": "$18.00"
     },
     {
       "Name": "Textured Knit Open Ribbed Trim Cardigan",
       "Price": "$65.00"
     },
     {
-      "Name": "Butter Basic Leggings with Pockets",
-      "Price": "$25.00"
+      "Name": "LONG PANTS BACK SMOCKING: GREY STRIPE",
+      "Price": "$40.00"
     },
     {
-      "Name": "Floral Print Mini Dress",
-      "Price": "$38.00"
+      "Name": "Long Sleeve Solid Lace Bodysuit",
+      "Price": "$30.00"
+    },
+    {
+      "Name": "PLUS SIZE CROP DISTRESSED DENIM JACKET",
+      "Price": "$58.00"
+    },
+    {
+      "Name": "High Waist Sculpting Flare Pants",
+      "Price": "$35.00"
+    },
+    {
+      "Name": "FAUX SUEDE MOTO JACKET",
+      "Price": "$74.00"
+    },
+    {
+      "Name": "Kelly green crop top",
+      "Price": "$25.00"
     }
   ]
 }
